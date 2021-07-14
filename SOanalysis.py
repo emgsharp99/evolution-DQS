@@ -14,6 +14,7 @@ matplotlib.rcParams.update({'font.size': 22})
 variable = 'epsilon'
 no_seeds = '100'
 
+figsave = os.getcwd()
 path = os.path.join(os.getcwd(), *['data_for_analysis_QHO', variable, no_seeds])
 
 if __name__ == '__main__':
@@ -86,4 +87,6 @@ if __name__ == '__main__':
             bbox_to_anchor=(1.15,0.5),
             loc='center right'
             )
+
+        fig.savefig(os.path.join(figsave, *['Analysis', 'SOAnalysis.pdf']), format = 'pdf')
     plt.show()
