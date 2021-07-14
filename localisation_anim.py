@@ -9,10 +9,10 @@ from scipy import linalg as ln
 from scipy import sparse as sparse
 
 epsilon = 3.0
-spacing = 160
+spacing = 20
 V_type = 'QHO'
 seed = 1
-max_steps = 750
+max_steps = 20
 
 class Wave_Packet:
     def __init__(self, epsilon, spacing, V_type, seed, dt = 0.25, x_range = 40, no_steps = 300, sigma0 = 1.5, k0 = 5.5):
@@ -54,6 +54,7 @@ class Wave_Packet:
         disorder[::self.spacing + 1] = perturbation[::self.spacing + 1]
         
         self.V_perturbed = self.V + disorder
+        self.V_perturbed_graphed = self.V + (disorder/15)
     
         # arrays for diagonal and off-diagonal values in Hamiltonian
         diag = np.zeros(self.N)
@@ -161,8 +162,8 @@ def animate(j):
     ax1.set_xlabel('Position, a$_0$')
     ax1.set_ylabel('Probability density, $|Ψ(x)|^2$')
     ax1.set_ylim([0,0.3])
-    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V/5, color = 'b', label = 'Potential (schematic)')
-    ax1.fill_between(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V/5, facecolor="none", hatch="/", edgecolor="b", linewidth=0.0)
+    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed/5, color = 'b', label = 'Potential (schematic)')
+    ax1.fill_between(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed/5, facecolor="blue",alpha=0.3, edgecolor="b", linewidth=0.0)
     ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][0], label = 'Wavepacket (unperturbed)')
     ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][1], label = 'Wavepacket (perturbed, ε = {})'.format(epsilon))
     ax1.legend()
@@ -176,8 +177,14 @@ def animate(j):
 wave_animation = animation.FuncAnimation(fig, animate, frames = len(wave_data), interval = 5)
 #plt.show()
 #HTML(wave_animation.to_html5_video())
+# wave_animation.save(
+#     './animations/s_{}_e_{}.gif'.format(spacing, epsilon),
+#     writer = 'pillow',
+#     fps = 30
+#     )
+
 wave_animation.save(
-    './animations/s_{}_e_{}.gif'.format(spacing, epsilon),
-    writer = 'pillow',
-    fps = 30
-    )
+'./animations/TEST.gif'.format(spacing, epsilon),
+writer = 'pillow',
+fps = 30
+)
