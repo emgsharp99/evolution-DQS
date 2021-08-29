@@ -3,6 +3,7 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
 import matplotlib.cbook as cbook
+import matplotlib.colors as colors
 from matplotlib.path import Path
 from matplotlib.patches import PathPatch
 import math
@@ -16,8 +17,8 @@ matplotlib.rcParams['mathtext.fontset'] = 'stix'
 matplotlib.rcParams['font.family'] = 'STIXGeneral'
 matplotlib.rcParams.update({'font.size': 22})
 
-no_seeds = 100
-iter = 'epsilon'
+no_seeds = 50
+iter = 'bigboi\\spacing'
 directory = r'C:\Users\emgsh\OneDrive\Documents\Stuff\Important Documents\University\Maths\Quantum Tunneling Project\Code\data_for_analysis_QHO'
 # where data files are saved
 path = os.path.join(directory, *[iter, str(no_seeds)])
@@ -89,8 +90,8 @@ def analysis(file_dir, foldername, plot = True):
         if len(epsilonvals) == 1:
             ax.set_title(
                 'Inner product of unperturbed and perturbed state\n at each timestep with fixed ε = {}'.format(epsilonvals[0]))
-            colors = [cm.jet(x) for x in np.linspace(0,1,len(spacingvals[::3]))]
-            for i in range(len(spacingvals[::3])):
+            colors = [cm.jet(x) for x in np.linspace(0,1,len(spacingvals[::4]))]
+            for i in range(len(spacingvals[::4])):
                 ax.plot(
                     x, 
                     all_inner_ave[i],
@@ -106,8 +107,8 @@ def analysis(file_dir, foldername, plot = True):
         elif len(spacingvals) == 1:
             ax.set_title(
                 'Inner product of unperturbed and perturbed state\n at each timestep with fixed spacing, s = {}'.format(spacingvals[0]))   
-            colors = [cm.jet(x) for x in np.linspace(0,1,len(epsilonvals[::3]))] 
-            for i in range(len(epsilonvals[::3])):
+            colors = [cm.jet(x) for x in np.linspace(0,1,len(epsilonvals[::4]))] 
+            for i in range(len(epsilonvals[::4])):
                 ax.plot(
                     x, 
                     all_inner_ave[i],                 
@@ -151,7 +152,7 @@ def iterator(path):
     iter_tag = os.listdir(path)[0].split('_')[3]
     for foldername in os.listdir(path):
         tag = str(foldername.split('_')[4])
-        if len(tag) < 3:
+        if len(tag) < 2:
             tag_list1.append(tag)
         else:
             tag_list2.append(tag)
@@ -185,7 +186,7 @@ def iterator(path):
 
 # plotting data
 A, d, e = iterator(path)
-fig, ax = plt.subplots(figsize = (10,10))
+fig, ax = plt.subplots(figsize = (12,12))
 ax.set_xticks(np.arange(len(e)))
 plt.xticks(rotation=90)
 ax.set_xticklabels(e)
@@ -196,8 +197,12 @@ ax.set_xlabel('Disorder, $ε$')
 ax.set_title('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩, \n between unperturbed and perturbed state')
 
 # colour map
-ave_inner_heat = ax.imshow(A, interpolation='bilinear', cmap = 'viridis')
-
+ave_inner_heat = ax.imshow(
+    A, 
+    interpolation='bilinear',
+    cmap='inferno'
+    )
+    
 # colour bar
 cbar = plt.colorbar(ave_inner_heat)
 cbar.set_label('Average ⟨ $Ψ_0$ | $Ψ_p$ ⟩', rotation=270, labelpad = 25)      

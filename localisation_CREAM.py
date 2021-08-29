@@ -6,7 +6,7 @@ import pickle
 from scipy import linalg as ln
 from scipy import sparse as sparse
 
-seed_list = [100]
+seed_list = [50]
 iter_list = ['spacing', 'epsilon']
 V_type = 'QHO'
 
@@ -14,7 +14,7 @@ for seed in seed_list:
     for iter in iter_list:
         seeds = np.arange(seed)
         iter_over = iter#'epsilon'
-        path = os.path.join(os.getcwd(), *['data_for_analysis_{}'.format(V_type), iter_over, str(len(seeds))])
+        path = os.path.join(os.getcwd(), *['data_for_analysis_{}'.format(V_type), iter_over, str(len(seeds))+'.4'])
 
         try:
             os.makedirs(path)
@@ -23,11 +23,11 @@ for seed in seed_list:
 
         epsilonvals = []
         spacingvals = []
-        for i in range(21):
-            epsilonvals.append(i/4)
+        for i in range(31):
+            epsilonvals.append(i/10)
             
-        for i in range(21):
-            spacingvals.append(i*10)
+        for i in range(20,21):
+            spacingvals.append(i)
 
         class Wave_Packet:
             def __init__(self, epsilon, spacing, V_type, seed, dt = 0.25, x_range = 40, no_steps = 300, sigma0 = 1.5, k0 = 5.5):

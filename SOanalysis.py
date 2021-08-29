@@ -11,8 +11,9 @@ matplotlib.rcParams['font.family'] = 'STIXGeneral'
 matplotlib.rcParams.update({'font.size': 22})
 
 
-variable = 'epsilon'
-no_seeds = '100'
+variable = 'bigboi//spacing'
+no_seeds = '50'
+n = 4
 
 figsave = os.getcwd()
 path = os.path.join(os.getcwd(), *['data_for_analysis_QHO', variable, no_seeds])
@@ -28,9 +29,9 @@ if __name__ == '__main__':
     tag_list1 = []
     tag_list2 = []
     for tag in tag_list:
-        if len(tag) < 3:
+        if len(tag) < 2:
             tag_list1.append(tag)
-        elif len(tag) == 3:
+        elif len(tag) == 2:
             tag_list2.append(tag)
         else:
             pass
@@ -40,20 +41,22 @@ if __name__ == '__main__':
 
     tag_list = tag_list1 + tag_list
 
-    tag_list = tag_list[0:5]
-
     folder_list = []
     
     for tag in tag_list:
-        folder = 'spacing_' + tag
+        folder = 'epsilon_' + tag
         folder_list.append(folder)
 
-    epsilon_list = []
-    spacing_ave_list = []
-    for folder in os.listdir(path)[::3]:
+    spacing_list = os.listdir(path)
+    spacing_list = sorted(spacing_list, key=lambda x: int(x.split('_')[4]))
+    epsilon_ave_list = []
+
+    label_list = []
+
+    for folder in spacing_list[::n]:
+        label_list.append(folder.split('_')[4])
         print('Working...')
-        epsilon_list.append(folder)
-        spacing_ave = []
+        epsilon_ave = []
         for tag in folder_list:
             inner_ave = 0
             for seed in os.listdir(os.path.join(path, *[folder, tag])):
@@ -61,32 +64,38 @@ if __name__ == '__main__':
                 data_arr = np.array(inner_data)
                 tval = len(data_arr)
                 inner_ave += data_arr
-            spacing_ave.append(np.sum(inner_ave/100)/tval)
-        spacing_ave_list.append(spacing_ave)
-    
-    label_list = []
-    for epsilon in epsilon_list:
-        label_list.append(epsilon.split('_')[4])
+            epsilon_ave.append(np.sum(inner_ave/100)/tval)
+        epsilon_ave_list.append(epsilon_ave)
 
     fig, ax = plt.subplots(figsize=(8,8))
-    colors = [cm.jet(x) for x in np.linspace(0,1,len(epsilon_list))] 
-    for i in range(len(spacing_ave_list)):
+    colors = [cm.jet(x) for x in np.linspace(0,1,len(spacing_list[::n]))] 
+    for i in range(len(epsilon_ave_list)):
         ax.plot(
             tag_list, 
-            spacing_ave_list[i], 
+            epsilon_ave_list[i], 
             color = colors[i],
             label = label_list[i]
             )
-        ax.set_ylabel('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩')
-        ax.set_xlabel('Spacing, $d$')
-        ax.set_ylabel('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩')
-        ax.set_title('Inner product ⟨ $Ψ_0$ | $Ψ_p$ ⟩ averaged\nover time for variable spacing values')
+    ax.set_ylabel('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩')
+    ax.set_xlabel('Dpsilon, $ε$')
+    ax.set_ylabel('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩')
+    ax.set_title('Inner product ⟨ $Ψ_0$ | $Ψ_p$ ⟩ averaged\nover time for variable spacing values')
 
-        ax.legend(
-            title='Disorder, $ε$',
-            bbox_to_anchor=(1.15,0.5),
-            loc='center right'
-            )
+    labels=ax.xaxis.get_ticklabels()
+    i=0
+    for i in range(len(labels)):
+        if i%3 > 0:
+            labels[i].set_visible(False)
+            i+=1
+        else:
+            i+=1
 
-        fig.savefig(os.path.join(figsave, *['Analysis', 'SOAnalysis.pdf']), format = 'pdf')
+    ax.legend(
+        title='Spacing, $d$',
+        bbox_to_anchor=(1.15,0.5),
+        loc='center right'
+        )
+
+    ax.grid()
+    fig.savefig(os.path.join(figsave, *['Analysis', 'SOAnalysis.pdf']), format = 'pdf')
     plt.show()
