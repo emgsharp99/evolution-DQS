@@ -1,4 +1,5 @@
 from IPython.display import HTML
+import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
@@ -8,11 +9,21 @@ import pandas as pd
 from scipy import linalg as ln
 from scipy import sparse as sparse
 
-epsilon = 3.0
-spacing = 20
+matplotlib.rcParams['mathtext.fontset'] = 'stix'
+matplotlib.rcParams['font.family'] = 'STIXGeneral'
+matplotlib.rcParams.update({'font.size': 22})
+
+epsilon = 2.1
+spacing = 0
 V_type = 'QHO'
 seed = 1
-max_steps = 20
+max_steps = 330
+
+# disorder with set seed
+perturbation = epsilon*random.uniform(-1, 1, size = 300)
+# creating desired spacin in disorder
+disorder = np.zeros(300)
+disorder[::spacing + 1] = perturbation[::spacing + 1]
 
 class Wave_Packet:
     def __init__(self, epsilon, spacing, V_type, seed, dt = 0.25, x_range = 40, no_steps = 300, sigma0 = 1.5, k0 = 5.5):
@@ -46,12 +57,6 @@ class Wave_Packet:
 #         # morse potential
 #         elif V_typle == 'Morse':
 #             pass 
-        
-        # disorder with set seed
-        perturbation = epsilon*random.uniform(-1, 1, size = self.N)
-        # creating desired spacin in disorder
-        disorder = np.zeros(self.N)
-        disorder[::self.spacing + 1] = perturbation[::self.spacing + 1]
         
         self.V_perturbed = self.V + disorder
         self.V_perturbed_graphed = self.V + (disorder/15)
@@ -145,7 +150,7 @@ class Evolution_Generator:
 wavep = Wave_Packet(epsilon, spacing, V_type, seed)
 wave_data = Evolution_Generator(Wave_Packet(epsilon, spacing, V_type, seed)).data_output()[0]
 
-fig, ax1 = plt.subplots()
+fig, ax1 = plt.subplots(figsize=(10,10))
 
 axtext = fig.add_axes([0.0,0.95,0.1,0.05])
 axtext.axis("off")
@@ -158,17 +163,29 @@ psi_perturbed, = ax1.plot([],[])
 def animate(j):
     print(str(round(j*100/max_steps, 2)) +'% complete.')
     ax1.clear()
-    ax1.set_title('Time evolution of perturbed and unperturbed wavepackets in {}'.format(V_type))
+    ax1.set_title('Time evolution of perturbed and\nunperturbed wavepackets in {}'.format(V_type))
     ax1.set_xlabel('Position, a$_0$')
     ax1.set_ylabel('Probability density, $|Ψ(x)|^2$')
     ax1.set_ylim([0,0.3])
-    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed/5, color = 'b', label = 'Potential (schematic)')
-    ax1.fill_between(Wave_Packet(epsilon, spacing, V_type, seed).x, Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed/5, facecolor="blue",alpha=0.3, edgecolor="b", linewidth=0.0)
-    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][0], label = 'Wavepacket (unperturbed)')
-    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][1], label = 'Wavepacket (perturbed, ε = {})'.format(epsilon))
+    ax1.plot(Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed[50:250]/5, color = 'b', label = 'Potential (schematic)')
+    ax1.fill_between(Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], Wave_Packet(epsilon, spacing, V_type, seed).V_perturbed_graphed[50:250]/5, facecolor="blue",alpha=0.3, edgecolor="b", linewidth=0.0)
+    ax1.plot(
+        Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], 
+        wave_data[j][0][50:250], 
+        label='Wavepacket (unperturbed)', 
+        linewidth=3,
+        color='orange'
+        )
+    ax1.plot(
+        Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], 
+        wave_data[j][1][50:250], 
+        label='Wavepacket (perturbed, ε = {})'.format(epsilon), 
+        linewidth=3
+        )
     ax1.legend()
-    psi.set_data(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][0])
-    psi_perturbed.set_data(Wave_Packet(epsilon, spacing, V_type, seed).x, wave_data[j][1])
+    ax1.grid()
+    psi.set_data(Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], wave_data[j][0][50:250])
+    psi_perturbed.set_data(Wave_Packet(epsilon, spacing, V_type, seed).x[50:250], wave_data[j][1][50:250])
     
     time.set_text(('Elapsed time: {:6.2f} fs').format(j * Wave_Packet(epsilon, spacing, V_type, seed).dt * 2.419e-2))
     
@@ -184,7 +201,7 @@ wave_animation = animation.FuncAnimation(fig, animate, frames = len(wave_data), 
 #     )
 
 wave_animation.save(
-'./animations/TEST.gif'.format(spacing, epsilon),
+'./animations/TEST1.1.gif'.format(spacing, epsilon),
 writer = 'pillow',
 fps = 30
 )
