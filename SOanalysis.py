@@ -69,12 +69,12 @@ if __name__ == '__main__':
 
     fig, ax = plt.subplots(figsize=(8,8))
     colors = [cm.jet(x) for x in np.linspace(0,1,len(spacing_list[::n]))] 
-    for i in range(len(epsilon_ave_list)):
+    for i in range(len(epsilon_ave_list)-1):
         ax.plot(
             tag_list, 
-            epsilon_ave_list[i], 
-            color = colors[i],
-            label = label_list[i]
+            epsilon_ave_list[i+1], 
+            color = colors[i+1],
+            label = label_list[i+1]
             )
     ax.set_ylabel('Average inner product, ⟨ $Ψ_0$ | $Ψ_p$ ⟩')
     ax.set_xlabel('Dpsilon, $ε$')
