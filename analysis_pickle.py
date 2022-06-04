@@ -202,12 +202,19 @@ ave_inner_heat = ax.imshow(
     interpolation='bilinear',
     cmap='inferno'
     )
+
+ax.contour(
+    A,
+    colors='white',
+    alpha=0.5,
+    levels=[0.43,0.53,0.63,0.73,0.83,0.93]
+    )
     
 # colour bar
 cbar = plt.colorbar(ave_inner_heat)
 cbar.set_label('Average ⟨ $Ψ_0$ | $Ψ_p$ ⟩', rotation=270, labelpad = 25)      
 
 ax.grid(True)
-fig.savefig(os.path.join(fig_save_path, 'Analysis/{}/{}/inner_cmap.pdf'.format(iter, str(no_seeds))), format = 'pdf')
+fig.savefig(os.path.join(fig_save_path, 'Analysis/{}/{}/inner_cmap_levels.pdf'.format(iter, str(no_seeds))), format = 'pdf')
 
 plt.show()
