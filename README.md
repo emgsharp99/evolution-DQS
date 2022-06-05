@@ -4,4 +4,4 @@
 
 Installisation is simple and requires cloning this repository and installing the packages in the requirements.txt file.
 
-For guided examples, see the examples.py file.
+For a guided example, see the examples.py file.
