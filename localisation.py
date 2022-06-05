@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 import numpy.random as random
+import os
 import pandas as pd
 from scipy import linalg as ln
 from scipy import sparse as sparse
@@ -12,7 +13,7 @@ from tqdm import tqdm
 
 
 class Wave_Packet:
-    def __init__(self, epsilon, spacing, dt = 0.25, x_0=0, x_range=40, resolution=100, sigma0=1.5, k0=3.0):
+    def __init__(self, epsilon, spacing, dt=0.25, x0=0, x_range=40, resolution=100, sigma0=1.5, k0=3.0):
         # instantiating constants
         self.N = resolution
         self.epsilon = epsilon
@@ -31,7 +32,7 @@ class Wave_Packet:
         
         # generation of Gaussian wavepacket 
         norm = (2.0 * np.pi * sigma0**2)**(-0.25)
-        self.psi = np.exp(-(self.x - x_0)**2 / (4.0 * sigma0**2))
+        self.psi = np.exp(-(self.x - x0)**2 / (4.0 * sigma0**2))
         self.psi = self.psi*np.exp(1.0j * k0 * self.x)
         self.psi *= norm
         
@@ -155,7 +156,7 @@ class Evolution_Generator:
         return self.wave_data, self.inner_data
        
 
-def viewer(wave_packet, max_steps=300, save=True, PATH="./test.gif"):
+def viewer(wave_packet, max_steps=300, save=True, PATH=r".\test.gif"):
     fig, ax1 = plt.subplots(figsize=(10,10))
     axtext = fig.add_axes([0.0,0.95,0.1,0.05])
     axtext.axis("off")
@@ -208,30 +209,36 @@ def viewer(wave_packet, max_steps=300, save=True, PATH="./test.gif"):
         
         return psi, psi_perturbed, time,
 
+    if save==True:
+        print('Saving to {}...'.format(PATH))
+    if save==False:
+        print('Animating...')
+
     wave_animation = animation.FuncAnimation(
         fig, 
         animate, 
         frames=tqdm(range(len(wave_data)),position=0, leave=True), 
         interval=0.5
         )
- 
+    
     if save==True:
-        print('Saving...')
         wave_animation.save(
         PATH,
         writer = 'pillow',
         fps = 30
         )
-        print('Saved to {}.'.format(PATH))
 
     if save==False:
-        plt.show()
-        HTML(wave_animation.to_html5_video())
+        try:
+            plt.show()
+            HTML(wave_animation.to_html5_video())
+        except Exception as e:
+            pass
     return
 
 
 if __name__ == '__main__':
-    wave=Wave_Packet(epsilon=0.0, spacing=0, x_0=5,resolution=100)
+    wave=Wave_Packet(epsilon=0.0, spacing=0, x0=5,resolution=100)
     wave.add_barrier("[10:11]", "100")
     wave.add_barrier("[40:60]", "abs(sin(x))/3")
     wave.add_barrier("[89:90]", "100")
