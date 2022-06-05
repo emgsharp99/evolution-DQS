@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 import numpy as np
 import numpy.random as random
-import os
 import pandas as pd
 from scipy import linalg as ln
 from scipy import sparse as sparse
@@ -39,6 +38,7 @@ class Wave_Packet:
         ## psi for perturbed
         self.psi_perturbed = self.psi    
         
+
     def add_barrier(self, loc, curve=0, preview=False):
         x = sympy.symbols("x")
         equation = curve
@@ -149,8 +149,7 @@ class Evolution_Generator:
         
     def data_output(self):
         print('Simulating...')
-        for i in tqdm(range(self.max_steps)):
-            # print(str(round(i*100/self.max_steps, 2)) +'% complete.')
+        for i in tqdm(range(self.max_steps), position=0, leave=True):
             self.wave_data.append(self.wave_packet.evolve())
             self.inner_data.append(self.wave_packet.evolve()[2])
         return self.wave_data, self.inner_data
@@ -209,7 +208,12 @@ def viewer(wave_packet, max_steps=300, save=True, PATH="./test.gif"):
         
         return psi, psi_perturbed, time,
 
-    wave_animation = animation.FuncAnimation(fig, animate, frames=tqdm(range(len(wave_data))), interval=0.5)
+    wave_animation = animation.FuncAnimation(
+        fig, 
+        animate, 
+        frames=tqdm(range(len(wave_data)),position=0, leave=True), 
+        interval=0.5
+        )
  
     if save==True:
         print('Saving...')
@@ -224,3 +228,12 @@ def viewer(wave_packet, max_steps=300, save=True, PATH="./test.gif"):
         plt.show()
         HTML(wave_animation.to_html5_video())
     return
+
+
+if __name__ == '__main__':
+    wave=Wave_Packet(epsilon=0.0, spacing=0, x_0=5,resolution=100)
+    wave.add_barrier("[10:11]", "100")
+    wave.add_barrier("[40:60]", "abs(sin(x))/3")
+    wave.add_barrier("[89:90]", "100")
+
+    viewer(wave, save=False, max_steps=300)
