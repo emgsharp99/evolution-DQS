@@ -22,6 +22,8 @@ class Wave_Packet:
         self.dt = dt
         self.seed = 1
         self.V = np.zeros(resolution)
+        self.V_perturbed = np.zeros(resolution)
+        self.V_perturbed_graphed = np.zeros(resolution)
         random.seed(self.seed)
 
         # disorder with set seed
@@ -65,8 +67,10 @@ class Wave_Packet:
             ax.grid()
             plt.show()
             accept = input("Accept? (Y/N) \n")
+            if accept=="Y".lower():
+                pass
             if accept=="N".lower():
-                print('Exiting')
+                print('Exiting.')
                 exit()
               
 
