@@ -1,3 +1,8 @@
 Analysis/
-animations/
 data_for_analysis_QHO/
+localisation_figures/
+pmm_reduced.py
+TISE_anderson.py
+test.py
+quantum_evolution/
+wave_figures/
