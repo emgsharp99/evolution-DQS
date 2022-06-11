@@ -5,4 +5,5 @@
 Installisation is simple and requires cloning this repository and installing the packages in the requirements.txt file.
 
 For a guided example, see the examples.py file.
-![](https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif | width=100)
+
+<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="200" height="400" />
