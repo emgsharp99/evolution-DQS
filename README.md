@@ -6,7 +6,4 @@ Installisation is simple and requires cloning this repository and installing the
 
 For a guided example, see the examples.py file.
 
-<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="400" height="400" />
-
-
-<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" width="400" height="400" />
+<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="400" height="400" /> <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" width="400" height="400" />
