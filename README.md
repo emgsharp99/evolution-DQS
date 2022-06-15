@@ -21,4 +21,4 @@ Animations <i/> folder in the repository. </b>
  
  <b> Disordered quantum harmonic oscillator: </b>
  
- <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" width="750" height="750" />
+ <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" width="750" height="750" /> 
