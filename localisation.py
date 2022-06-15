@@ -11,6 +11,7 @@ from scipy import sparse as sparse
 import sympy as sympy
 from tqdm import tqdm
 
+matplotlib.rcParams.update({'font.size': 20})
 
 class Wave_Packet:
     def __init__(self, epsilon, spacing, dt=0.25, x0=0, x_range=40, resolution=100, sigma0=1.5, k0=3.0):
