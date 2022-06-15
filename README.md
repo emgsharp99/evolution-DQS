@@ -7,6 +7,11 @@ Installisation is simple and requires cloning this repository and installing the
 For a guided example, see the examples.py file. Below are some a few animations which show the potential of this software. In particular we see: a free particle, a particle in infinite square well, a quantum harmonic osciallator, and a perturbed quantum harmonic oscilaltor. <b> More animations can be seen in the <i>
 Animations <i/> folder in the repository. </b>
  
- <bu> Free particle: </bu>
-<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="750" height="750" /> <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" width="750" height="750" /> 
-<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho.gif" width="750" height="750" /> <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" width="750" height="750" />
+ <b> Free particle: </b>
+<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="750" height="750" />
+ <b> (Quasi-)infinite square well: </b>
+ <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" width="750" height="750" /> 
+ <b> Quantum harmonic oscillator: </b>
+<img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho.gif" width="750" height="750" /> 
+ <b> Diosrdered quantum harmonic oscillator: </b>
+ <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" width="750" height="750" />
