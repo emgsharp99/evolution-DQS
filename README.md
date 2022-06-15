@@ -4,7 +4,7 @@
 
 Installisation is simple and requires cloning this repository and installing the packages in the requirements.txt file.
 
-For a guided example, see the examples.py file. Below are some a few animations which show the potential of this software. In particular we see: a free particle, a particle in infinite square well, a quantum harmonic osciallator, and a perturbed quantum harmonic oscilaltor. <b> More animations can be see in the <i>
+For a guided example, see the examples.py file. Below are some a few animations which show the potential of this software. In particular we see: a free particle, a particle in infinite square well, a quantum harmonic osciallator, and a perturbed quantum harmonic oscilaltor. <b> More animations can be seen in the <i>
 Animations <i/> folder in the repository. </b>
  
  
