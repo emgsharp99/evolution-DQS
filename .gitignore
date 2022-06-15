@@ -6,3 +6,6 @@ TISE_anderson.py
 test.py
 quantum_evolution/
 wave_figures/
+_pycache/
+.vscode/
+.history/
