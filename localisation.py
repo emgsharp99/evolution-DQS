@@ -22,16 +22,18 @@ class Wave_Packet:
         self.x, self.dx = np.linspace(-1*x_range/2, x_range/2, self.N, retstep = True)
         self.dt = dt
         self.seed = 1
-        self.V = np.zeros(resolution)
-        self.V_perturbed = np.zeros(resolution)
-        self.V_perturbed_graphed = np.zeros(resolution)
         random.seed(self.seed)
 
         # disorder with set seed
         perturbation = epsilon*random.uniform(-1, 1, size=resolution)
-        # creating desired spacin in disorder
+        # creating desired spacing in disorder
         self.disorder = np.zeros(resolution)
         self.disorder[::spacing + 1] = perturbation[::spacing + 1]
+
+        # setting potential landscape
+        self.V = np.zeros(resolution)
+        self.V_perturbed = np.zeros(resolution) + self.disorder
+        self.V_perturbed_graphed = np.zeros(resolution) + (self.disorder/15)
         
         # generation of Gaussian wavepacket 
         norm = (2.0 * np.pi * sigma0**2)**(-0.25)
@@ -39,11 +41,14 @@ class Wave_Packet:
         self.psi = self.psi*np.exp(1.0j * k0 * self.x)
         self.psi *= norm
         
-        ## psi for perturbed
+        # pre-allocating array for perturbed wavepacket
         self.psi_perturbed = self.psi    
         
 
     def add_barrier(self, loc, curve=0, preview=False):
+        '''Function for adding a barrier in some region based on any curve, V(x). Entered in the form "exp(sin(a*x))"., etc. 
+        It is important make sure that the correct Pythonic operations are used, i.e ax -> a*x.'''
+        
         x = sympy.symbols("x")
         equation = curve
         equation = sympy.lambdify(x, equation, "numpy")
@@ -55,9 +60,10 @@ class Wave_Packet:
         x_cent = round(len(self.x)/2)
         barr_cent = round(len(loc)/2)
 
+        # ensures that the curve is centered in the right location
         self.V[loc]=equation(self.x[x_cent-barr_cent:x_cent+barr_cent])
-        self.V_perturbed = self.V + self.disorder
-        self.V_perturbed_graphed = self.V + (self.disorder/15)
+        self.V_perturbed += self.V #+ self.disorder
+        self.V_perturbed_graphed += self.V #+ (self.disorder/15)
 
         if preview==True:
             fig, ax = plt.subplots(figsize=(10,10))
@@ -154,6 +160,8 @@ class Evolution_Generator:
         self.inner_data = []
         
     def data_output(self):
+        '''Drives recursive simulation and allows us to recover data from process if
+         we would like to analyse it.'''
         print('Simulating...')
         for i in tqdm(range(self.max_steps), position=0, leave=True):
             self.wave_data.append(self.wave_packet.evolve())
@@ -162,6 +170,7 @@ class Evolution_Generator:
        
 
 def viewer(wave_packet, max_steps=300, save=True, PATH=r".\test.gif"):
+    '''Manages viewing modes, whether one wants to view straight away or save to some path.'''
     fig, ax1 = plt.subplots(figsize=(10,10))
     axtext = fig.add_axes([0.0,0.95,0.1,0.05])
     axtext.axis("off")
