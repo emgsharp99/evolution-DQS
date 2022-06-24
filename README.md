@@ -11,6 +11,10 @@ Animations <i/> folder in the repository. </b>
  
 <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="750" height="750" />
  
+ <b> Disorder free particle: </b>
+ 
+ <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/free_part.gif" width="750" height="750" />
+  
  <b> (Quasi-)infinite square well: </b>
  
  <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/inf_square_well.gif" width="750" height="750" /> 
