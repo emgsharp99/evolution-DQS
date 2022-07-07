@@ -185,7 +185,7 @@ def viewer(wave_packet, max_steps=300, save=True, PATH=r".\test.gif"):
         ax1.set_title('Time evolution of perturbed and\nunperturbed wavepackets')
         ax1.set_xlabel('Position, a$_0$')
         ax1.set_ylabel('Probability density, $|Ψ(x)|^2$')
-        ax1.set_ylim([0,0.3])
+        ax1.set_ylim([-0.05,0.3])
 
         ax1.plot(
             wave_packet.x, 
