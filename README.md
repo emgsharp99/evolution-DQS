@@ -26,3 +26,37 @@ Animations <i/> folder in the repository. </b>
  <b> Disordered quantum harmonic oscillator: </b>
  
  <img src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" data-canonical-src="https://github.com/emgsharp99/evolution-DQS/blob/main/Animations/qho_pert.gif" width="750" height="750" /> 
+
+
+### How to use the code:
+Our software is easy to use. First you must create a <i> Wave_Packet </i> object:
+wave=Wave_Packet(
+      epsilon=0.0,    # amplitude of disorder
+      spacing=0,      # spacing of disorder
+      dt=0.25,        # length of each timestep
+      x0=5,           # starting position of wave in x_range
+      x_range=40,     # size of landscape, symmetrical so 40 means x is from -20 to 20 
+      resolution=100, # how many steps the range in discretised into
+      sigma0=1.5,     # shape of wave
+      k0=3.0          # momentum of wave
+      ).
+This sets out the characteristics of the landscape and Gaussian wave packet that you wish to simulate.
+
+Next, we can add an arbitrary curve to this landscape, which represents a potential of some function. We do this using the <i> add_barrier </i> method:
+wave.add_barrier(
+       "[70:230]",            # location of barrier, in terms of resolution (must be integers)
+       curve="x**2/150",      # equation of curve, must use proper Python operators, e.g. "ax" -> "a*x"
+       preview=False          # gives a preview and asks for input to verify if correct
+       ).
+Any 1 dimensional function V(𝑥) can be used in the <i>curve</i> argument, and its location is set by the first of argument of the method. If the user wishes to preview their updated potential landscape before running the full simulation, they simply include <i>preview=True</i> as an argument.
+
+Once the user is happy with the potential that they have set up, they can finally call the <i>viewer</i> function to generate an animation of the time evolution of the wave function:
+viewer(
+    wave, 
+    max_steps=300,      # number of time steps to simulate for
+    save=True,          # option to save to set path
+    PATH=r"./PATH.gif"  # save path
+    ).
+The arguments are fairly straightforward. We select the number of steps we wish to simulate, and whether we wish to save the animation. If the user wishes to save the animation, then they must specify a save path. The default save path is ./test.gif. If the animation is not saved, then it will appear in the code editor.
+
+
