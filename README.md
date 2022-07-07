@@ -29,7 +29,9 @@ Animations <i/> folder in the repository. </b>
 
 
 ### How to use the code:
-Our software is easy to use. First you must create a <i> Wave_Packet </i> object:
+Our software is easy to use. First you must create a 
+ <i> Wave_Packet </i>
+ object:
 wave=Wave_Packet(
       epsilon=0.0,    # amplitude of disorder
       spacing=0,      # spacing of disorder
