@@ -37,7 +37,7 @@ Once the required packages are installed, we must import the code by including;
 ```
 from localisation import *
 ```
-in the code editor, or in the command line.
+in our code editor.
 
 Next, you must create a *Wave_Packet* object:
 
